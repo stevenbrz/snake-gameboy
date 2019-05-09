@@ -434,9 +434,18 @@ game_over_wait:
 	cpl
 	or a, $F0 ; Set all msb's to 1
 	cp a, $F8 ; if a contains 0b1111.1000 -> only start button is pressed
-	jp z, start_game
+	jp z, start_game_again
 	jp game_over_wait
 	
+start_game_again:
+	ld hl, 0
+
+start_game_again_loop:
+	ld a, h
+	cp a, $F0
+	jp z, Start
+	inc hl
+	jp start_game_again_loop
 
 increase_length:
 	; save state of registers we will clobber
